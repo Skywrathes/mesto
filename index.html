@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,39 +8,135 @@
   <link rel="stylesheet" href="styles.css">
   <title>Mesto</title>
 </head>
+
 <body class="page">
   <div class="page__container">
-    <header class="header">
-      <img src="./images/LogoMesto.svg" alt="Россия логотип" class="logo">
+    <header class="header header_margin">
+      <img class="logo" src="./images/LogoMesto.svg" alt="Россия логотип">
     </header>
     <main class="content">
-      <section class="profile">
-        <img class="avatar" src="images/Avatar.svg" alt="Аватар">
-        <div class="profile__info">
-          <div class="profile__name-container">
-            <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <div class="edit-button"></div>
+      <section class="profile profile_margin">
+        <div class="profile__info-container">
+          <img class="avatar" src="images/Avatar.svg" alt="Аватар">
+          <div class="profile__info">
+            <div class="profile__name-container">
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <button class="edit-button">
+                <img class="edit-button__image" src="images/Pen.svg" alt="Кнопка редактирования профиля">
+              </button>
+            </div>
+            <p class="profile__about">Исследователь океана</p>
           </div>
-          <p class="profile__occupation"></p>
         </div>
         <button class="add-button">
-          <img class="cross" src="images/Cross.svg" alt="Иконка добавления контента">
+          <img class="add-button__cross" src="images/Cross.svg" alt="Иконка добавления контента">
         </button>
       </section>
-      <section class="photo-grid">
+      <section class="photo-grid photo-grid_margin">
         <div class="photo-grid__card">
-          <img src="" alt="" class="photo-grid__image">
-          <h3 class="photo-grid__description"></h3>
+          <div class="photo-grid__image-container">
+            <img class="photo-grid__image" src="images/Spb.jpg" alt="Казанский собор">
+          </div>
+          <div class="photo-grid__description">
+            <div class="photo-grid__description-container">
+              <h3 class="photo-grid__title">
+                Санкт-Петербург
+              </h3>
+              <img class="photo-grid__like" src="images/Like.svg" alt="Кнопка Оценить">
+            </div>
+          </div>
+        </div>
+        <div class="photo-grid__card">
+          <div class="photo-grid__image-container">
+            <img class="photo-grid__image" src="images/Ivanovo.jpg" alt="Иваново">
+          </div>
+          <div class="photo-grid__description">
+            <div class="photo-grid__description-container">
+              <h3 class="photo-grid__title">
+                Иваново
+              </h3>
+              <img class="photo-grid__like" src="images/Like.svg" alt="Кнопка Оценить">
+            </div>
+          </div>
+        </div>
+        <div class="photo-grid__card">
+          <div class="photo-grid__image-container">
+            <img class="photo-grid__image" src="images/Pushkin.jpg" alt="Город Пушкин">
+          </div>
+          <div class="photo-grid__description">
+            <div class="photo-grid__description-container">
+              <h3 class="photo-grid__title">
+                Пушкин
+              </h3>
+              <img class="photo-grid__like" src="images/Like.svg" alt="Кнопка Оценить">
+            </div>
+          </div>
+        </div>
+        <div class="photo-grid__card">
+          <div class="photo-grid__image-container">
+            <img class="photo-grid__image" src="images/Kostroma.jpg" alt="Кострома">
+          </div>
+          <div class="photo-grid__description">
+            <div class="photo-grid__description-container">
+              <h3 class="photo-grid__title">
+                Кострома
+              </h3>
+              <img class="photo-grid__like" src="images/Like.svg" alt="Кнопка Оценить">
+            </div>
+          </div>
+        </div>
+        <div class="photo-grid__card">
+          <div class="photo-grid__image-container">
+            <img class="photo-grid__image" src="images/Pestyaki.jpg" alt="Поселок Пестяки">
+          </div>
+          <div class="photo-grid__description">
+            <div class="photo-grid__description-container">
+              <h3 class="photo-grid__title">
+                Пестяки
+              </h3>
+              <img class="photo-grid__like" src="images/Like.svg" alt="Кнопка Оценить">
+            </div>
+          </div>
+        </div>
+        <div class="photo-grid__card">
+          <div class="photo-grid__image-container">
+            <img class="photo-grid__image" src="images/Spb-2.jpg" alt="Санкт-Петербург набережная">
+          </div>
+          <div class="photo-grid__description">
+            <div class="photo-grid__description-container">
+              <h3 class="photo-grid__title">
+                Санкт-Петербург
+              </h3>
+              <img class="photo-grid__like" src="images/Like.svg" alt="Кнопка Оценить">
+            </div>
+          </div>
         </div>
       </section>
     </main>
-    <footer class="footer">
-      <div class="footer__container">
-        <p class="footer__copyright">
-          &copy; 2023. Mesto Russia
-        </p>
-      </div>
+    <footer class="footer footer_margin">
+      <p class="footer__copyright">
+        &copy; 2023. Mesto Russia
+      </p>
     </footer>
   </div>
+  <section class="popup">
+    <form class="edit-form">
+      <img class="edit-form__close" src="images/CloseIcon.svg" alt="Иконка закрытия попапа">
+      <div class="edit-form__container">
+        <h2 class="edit-form__title">
+          Редактировать профиль
+        </h2>
+        <div class="edit-form__input">
+          <input class="input__name" type="text" id="name" name="name" value="Жак-Ив Кусто">
+          <input class="input__about" type="text" id="about" name="about" value="Исследователь океана">
+        </div>
+        <button class="edit-form__save" type="submit">
+          Сохранить
+        </button>
+      </div>
+      
+    </form>
+  </section>
 </body>
+
 </html>
