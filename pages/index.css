@@ -33,10 +33,10 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/edit-form/edit-form.css);
 @import url(../blocks/edit-form/__container/edit-form__container.css);
+@import url(../blocks/edit-form/__input-name/edit-form__input-name.css);
+@import url(../blocks/edit-form/__input-about/edit-form__input-about.css);
 @import url(../blocks/edit-form/__title/edit-form__title.css);
 @import url(../blocks/edit-form/__input/edit-form__input.css);
 @import url(../blocks/edit-form/__close/edit-form__close.css);
-@import url(../blocks/input/__name/input__name.css);
-@import url(../blocks/input/__about/input__about.css);
 @import url(../blocks/edit-form/__save/edit-form__save.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
