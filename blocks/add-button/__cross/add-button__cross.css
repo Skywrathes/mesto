@@ -1,0 +1,11 @@
+.add-button__cross {
+  width: 22px;
+  height: 22px;
+}
+
+@media screen and (width < 1024px) {
+  .add-button__cross {
+    width: 16px;
+    height: 16px;
+  }
+}

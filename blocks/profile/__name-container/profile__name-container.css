@@ -1,0 +1,13 @@
+.profile__name-container {
+  width: fit-content;
+  display: flex;
+  gap: 18px;
+  align-items: end;
+}
+
+@media screen and (width < 1024px) {
+  .profile__name-container {
+    transform: translate(13px);
+    gap: 10px;
+  }
+}

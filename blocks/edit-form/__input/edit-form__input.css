@@ -1,0 +1,14 @@
+.edit-form__input {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-bottom: 48px;
+  margin-top: 54px;
+}
+
+@media screen and (width < 600px) {
+  .edit-form__input {
+    margin-top: 75px;
+    margin-bottom: 45px;
+  }
+}

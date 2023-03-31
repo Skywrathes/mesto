@@ -1,0 +1,11 @@
+.edit-form__container {
+  display: flex;
+  flex-direction: column;
+  margin: 34px 36px 37px 36px;
+}
+
+@media screen and (width < 600px) {
+  .edit-form__container {
+    margin: 25px 22px;
+  }
+}
