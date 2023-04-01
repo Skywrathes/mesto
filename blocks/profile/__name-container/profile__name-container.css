@@ -3,11 +3,13 @@
   display: flex;
   gap: 18px;
   align-items: end;
+  max-width: 100%;
 }
 
 @media screen and (width < 1024px) {
   .profile__name-container {
     transform: translate(13px);
     gap: 10px;
+    width: auto;
   }
 }

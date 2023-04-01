@@ -1,0 +1,11 @@
+.page__photo-grid {
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+@media screen and (width < 1280px) {
+  .page__photo-grid {
+    margin-left: calc(19px + (200 - 19) * ((100vw - 320px)/(1279 - 320)));
+    margin-right: calc(19px + (200 - 19) * ((100vw - 320px)/(1279 - 320)));
+  }
+}

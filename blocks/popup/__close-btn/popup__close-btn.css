@@ -1,0 +1,21 @@
+.popup__close-btn {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  padding: 0;
+  border: 0;
+  background-color: rgba(255, 255, 255, 0);
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (width < 600px) {
+  .popup__close-btn {
+    width: 20px;
+    height: 20px;
+    top: -36px;
+    right: 0px;
+  }
+}
