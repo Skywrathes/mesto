@@ -8,7 +8,8 @@
 
 @media screen and (width < 1024px) {
   .profile__name-container {
-    transform: translate(13px);
+    padding-left: 25px;
+    align-items: center;
     gap: 10px;
     width: auto;
   }

@@ -8,7 +8,7 @@
 @media screen and (width < 1024px) {
   .profile__info {
     align-items: center;
-    gap: 14px;
-    width: auto;
+    gap: 8px;
+    width: 100%;
   }
 }

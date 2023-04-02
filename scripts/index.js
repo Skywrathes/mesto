@@ -5,7 +5,6 @@ let aboutInput = form.querySelector('.edit-form__input_profile_about');
 let edit = document.querySelector('.profile__edit-button');
 let popup = document.querySelector('.popup');
 let close = document.querySelector('.popup__close');
-let like = document.querySelectorAll('.card__like');
 let nameOnPage = document.querySelector('.profile__name');
 let aboutOnPage = document.querySelector('.profile__about');
 
@@ -42,6 +41,8 @@ function handleFormSubmit(evt) {
 // Submit listener
 form.addEventListener('submit', handleFormSubmit); 
 
+
+// let like = document.querySelectorAll('.card__like');
 // //like
 // like.forEach.call(like, function(el){
 //   el.addEventListener('click', e => {if (e.target.src.includes('LikeActive') == false) {
