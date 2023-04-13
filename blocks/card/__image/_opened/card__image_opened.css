@@ -1,0 +1,7 @@
+.card__image_opened {
+  position: fixed;
+  top: 0;
+  left: 0;
+  max-width: 75vw;
+  max-height: 75vh;
+}

@@ -8,4 +8,6 @@
   align-items: center;
   justify-content: center;
   display: none;
+  opacity: 0;
+  transition: opasity 1s ease;
 }
