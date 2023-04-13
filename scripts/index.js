@@ -72,6 +72,10 @@ let popupOpen = function (index) {
   linkInput.value = '';
 }
 
+let popupOpenDark = function (index) {
+  popup[index].classList.add('popup_opened_dark');
+}
+
 //Popup close func
 let popupClose = function (index) {
   popup[index].classList.remove('popup_opened');
@@ -90,6 +94,7 @@ photoGrid.addEventListener('click', function (event) {
     popupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
     //There is also an option to get target.event.alt
     popupOpen(2);
+    popupOpenDark(2);
   }
 });
 
