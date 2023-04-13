@@ -52,6 +52,7 @@ initialCards.forEach(function (item) {
   let newCard = cardTemplate.content.cloneNode(true);
   newCard.querySelector('.card__title').textContent = item.name;
   newCard.querySelector('.card__image').src = item.link;
+  newCard.querySelector('.card__image').alt = item.name;
   photoGrid.prepend(newCard);
 });
 
