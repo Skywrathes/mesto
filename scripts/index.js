@@ -1,138 +1,145 @@
 //find elements in DOM
-const page = document.querySelector('.page');
-const profileForm = document.querySelector('.edit-form_profile_submit');
-const cardForm = document.querySelector('.edit-form_card_submit');
-const nameInput = profileForm.querySelector('.edit-form__input_profile_name');
-const aboutInput = profileForm.querySelector('.edit-form__input_profile_about');
-const titleInput = cardForm.querySelector('.edit-form__input_card_title');
-const linkInput = cardForm.querySelector('.edit-form__input_card_link');
-const edit = document.querySelector('.profile__edit-button');
-const popup = document.querySelectorAll('.popup');
-const closeEdit = document.querySelector('.popup__close_edit_form');
-const closeAdd = document.querySelector('.popup__close_card_add');
-const closeImage = document.querySelector('.popup__close_image_fullscreen');
+//Profile elements
 const nameOnPage = document.querySelector('.profile__name');
 const aboutOnPage = document.querySelector('.profile__about');
+const addCardButton = document.querySelector('.profile__add-button');
+const editButton = document.querySelector('.profile__edit-button');
+
+//Cards
 const photoGrid = document.querySelector('.photo-grid');
-const addButton = document.querySelector('.profile__add-button');
+
+// Edit profile popup
+const editProfilePopup = document.querySelector('.popup_type_edit-profile');
+const profileForm = document.querySelector('.edit-form_profile_submit');
+const editProfileNameInput = profileForm.querySelector('.edit-form__input_profile_name');
+const editProfileAboutInput = profileForm.querySelector('.edit-form__input_profile_about');
+const closeEditProfilePopup = editProfilePopup.querySelector('.popup__close_edit_form');
+
+
+// Add new card popup
+const addCardPopup = document.querySelector('.popup_type_add-card');
+const addCardForm = addCardPopup.querySelector('.edit-form_card_submit');
+const addCardTitleInput = addCardForm.querySelector('.edit-form__input_card_title');
+const addCardLinkInput = addCardForm.querySelector('.edit-form__input_card_link');
+const closeAddCardPopup = addCardPopup.querySelector('.popup__close_card_add');
+
+// Fullscreen image show popup
+const showImagePopup = document.querySelector('.popup_type_show-image');
+const closeShowImagePopup = showImagePopup.querySelector('.popup__close_image_fullscreen');
+const fullscreenPopupImage = showImagePopup.querySelector('.popup__image');
+const fullscreenPopupImageTitle = showImagePopup.querySelector('.popup__image-title');
+
+//Template for new card
 const cardTemplate = document.querySelector('#card');
-const deleteButton = document.querySelectorAll('.card__delete-icon');
-const popupImage = document.querySelector('.popup__image');
-const popupImageTitle = document.querySelector('.popup__image-title');
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
-//Insertion of initial cards
-initialCards.forEach(function (item) {
-  let newCard = cardTemplate.content.cloneNode(true);
+function createCard(item) {
+  const newCard = cardTemplate.content.cloneNode(true);
   newCard.querySelector('.card__title').textContent = item.name;
   newCard.querySelector('.card__image').src = item.link;
   newCard.querySelector('.card__image').alt = item.name;
-  photoGrid.prepend(newCard);
-});
+  return newCard;
+}
 
+//Insertion of initial cards
+initialCards.forEach(function (item) {
+  photoGrid.append(createCard(item));
+});
 
 //Card delete 
 photoGrid.addEventListener('click', function (event) {
   if (event.target.classList != 'card__delete-icon') return;
-  let closestCard = event.target.closest('.card');
+  const closestCard = event.target.closest('.card');
   closestCard.remove();
 })
 
-//Popup open func with getting the text content from page
-let popupOpen = function (index) {
-  popup[index].classList.add('popup_opened');
-  nameInput.value = nameOnPage.textContent;
-  aboutInput.value = aboutOnPage.textContent;
-  titleInput.value = '';
-  linkInput.value = '';
+//Edit Popup open func with getting the text content from page
+const editProfilePopupOpen = function () {
+  editProfilePopup.classList.add('popup_opened');
+  editProfileNameInput.value = nameOnPage.textContent;
+  editProfileAboutInput.value = aboutOnPage.textContent;
 }
 
-let popupOpenDark = function (index) {
-  popup[index].classList.add('popup_opened_dark');
+// AddCard popup open func
+const addCardPopupOpen = function () {
+  addCardPopup.classList.add('popup_opened');
+  addCardTitleInput.value = '';
+  addCardLinkInput.value = '';
 }
 
-//Popup close func
-let popupClose = function (index) {
-  popup[index].classList.remove('popup_opened');
+
+//Fullscreen popup open func
+const showImagePopupOpen = function () {
+  showImagePopup.classList.add('popup_opened');
 }
+
+//Edit popup close func
+const editProfilePopupClose = function () {
+  editProfilePopup.classList.remove('popup_opened');
+}
+
+//AddCard popup close func
+const addCardPopupClose = function () {
+  addCardPopup.classList.remove('popup_opened');
+}
+
+//Fullscreen popup close func
+const showImagePopupClose = function () {
+  showImagePopup.classList.remove('popup_opened');
+}
+
+// Close popups
+closeEditProfilePopup.addEventListener('click', editProfilePopupClose);
+closeAddCardPopup.addEventListener('click', addCardPopupClose);
+closeShowImagePopup.addEventListener('click', showImagePopupClose);
+
 
 // Open popup
-edit.addEventListener('click', () => popupOpen(0));
-addButton.addEventListener('click', () => popupOpen(1));
+editButton.addEventListener('click', editProfilePopupOpen);
+addCardButton.addEventListener('click', addCardPopupOpen);
 
 //Open popup with fullscreen image
 photoGrid.addEventListener('click', function (event) {
   if (event.target.classList == 'card__image') {
-    popupImage.src = event.target.src;
+    fullscreenPopupImage.src = event.target.src;
+    fullscreenPopupImage.alt = event.target.alt;
     //find nearest card title
     //console.log(event.target.closest('.card').querySelector('.card__title').textContent);
-    popupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
+    fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
     //There is also an option to get target.event.alt
-    popupOpen(2);
-    popupOpenDark(2);
+    showImagePopupOpen();
   }
 });
 
-// Close popups
-closeEdit.addEventListener('click', () => popupClose(0));
-closeAdd.addEventListener('click', () => popupClose(1));
-closeImage.addEventListener('click', () => popupClose(2));
+
 
 //Submit profile func
 function handleFormSubmit(evt) {
   evt.preventDefault();
   // get aboutInput and nameInput from value prop.
-  let name = nameInput.value;
-  let about = aboutInput.value;
+  const name = editProfileNameInput.value;
+  const about = editProfileAboutInput.value;
   // choose elements to change and change them using textContent
   nameOnPage.textContent = name;
   aboutOnPage.textContent = about;
-  popupClose(0);
+  editProfilePopupClose();
 }
 
 //Insertion of new cards func
 function addFormSubmit(evt) {
   evt.preventDefault();
-  // get aboutInput and nameInput from value prop.
-  let newCard = cardTemplate.content.cloneNode(true);
-  let title = titleInput.value;
-  let link = linkInput.value;
-  newCard.querySelector('.card__title').textContent = title;
-  newCard.querySelector('.card__image').src = link;
-  newCard.querySelector('.card__image').alt = title;
-  photoGrid.prepend(newCard);
-  popupClose(1);
+  // Create obj from inputs to use in createCard func
+  const newCardObj = {
+    name: addCardTitleInput.value,
+    link: addCardLinkInput.value
+  };
+  //add card to the beginning of photoGrid
+  photoGrid.prepend(createCard(newCardObj));
+  addCardPopupClose();
 }
 
 // Submit listeners
 profileForm.addEventListener('submit', handleFormSubmit);
-cardForm.addEventListener('submit', addFormSubmit);
+addCardForm.addEventListener('submit', addFormSubmit);
 
 
 //Like
