@@ -52,50 +52,33 @@ photoGrid.addEventListener('click', function (event) {
   closestCard.remove();
 })
 
-//Edit Popup open func with getting the text content from page
-const editProfilePopupOpen = function () {
-  editProfilePopup.classList.add('popup_opened');
-  editProfileNameInput.value = nameOnPage.textContent;
-  editProfileAboutInput.value = aboutOnPage.textContent;
+//Popups open func
+const openPopup = function (el) {
+  el.classList.add('popup_opened');
 }
 
-// AddCard popup open func
-const addCardPopupOpen = function () {
-  addCardPopup.classList.add('popup_opened');
-  addCardTitleInput.value = '';
-  addCardLinkInput.value = '';
-}
-
-
-//Fullscreen popup open func
-const showImagePopupOpen = function () {
-  showImagePopup.classList.add('popup_opened');
-}
-
-//Edit popup close func
-const editProfilePopupClose = function () {
-  editProfilePopup.classList.remove('popup_opened');
-}
-
-//AddCard popup close func
-const addCardPopupClose = function () {
-  addCardPopup.classList.remove('popup_opened');
-}
-
-//Fullscreen popup close func
-const showImagePopupClose = function () {
-  showImagePopup.classList.remove('popup_opened');
+//Popups close func
+const closePopup = function (el) {
+  el.classList.remove('popup_opened');
 }
 
 // Close popups
-closeEditProfilePopup.addEventListener('click', editProfilePopupClose);
-closeAddCardPopup.addEventListener('click', addCardPopupClose);
-closeShowImagePopup.addEventListener('click', showImagePopupClose);
+closeEditProfilePopup.addEventListener('click', () => closePopup(editProfilePopup));
+closeAddCardPopup.addEventListener('click', () => closePopup(addCardPopup));
+closeShowImagePopup.addEventListener('click', () => closePopup(showImagePopup));
 
 
 // Open popup
-editButton.addEventListener('click', editProfilePopupOpen);
-addCardButton.addEventListener('click', addCardPopupOpen);
+editButton.addEventListener('click', () => {
+  openPopup(editProfilePopup);
+  editProfileNameInput.value = nameOnPage.textContent;
+  editProfileAboutInput.value = aboutOnPage.textContent;
+});
+addCardButton.addEventListener('click', () => {
+  openPopup(addCardPopup);
+  addCardTitleInput.value = '';
+  addCardLinkInput.value = '';
+});
 
 //Open popup with fullscreen image
 photoGrid.addEventListener('click', function (event) {
@@ -103,10 +86,9 @@ photoGrid.addEventListener('click', function (event) {
     fullscreenPopupImage.src = event.target.src;
     fullscreenPopupImage.alt = event.target.alt;
     //find nearest card title
-    //console.log(event.target.closest('.card').querySelector('.card__title').textContent);
     fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
-    //There is also an option to get target.event.alt
-    showImagePopupOpen();
+    //There is also an option to get event.target.alt
+    openPopup(showImagePopup);
   }
 });
 
@@ -121,7 +103,7 @@ function handleFormSubmit(evt) {
   // choose elements to change and change them using textContent
   nameOnPage.textContent = name;
   aboutOnPage.textContent = about;
-  editProfilePopupClose();
+  closePopup(editProfilePopup);
 }
 
 //Insertion of new cards func
@@ -134,7 +116,7 @@ function addFormSubmit(evt) {
   };
   //add card to the beginning of photoGrid
   photoGrid.prepend(createCard(newCardObj));
-  addCardPopupClose();
+  closePopup(addCardPopup);
 }
 
 // Submit listeners
@@ -144,10 +126,22 @@ addCardForm.addEventListener('submit', addFormSubmit);
 
 //Like
 photoGrid.addEventListener('click', function (event) {
-  if (event.target.src.includes('LikeActive')) {
+  if (event.target.classList == 'card__like') {
+    if (event.target.src.includes('LikeActive')) {
     event.target.src = "./images/Like.svg";
   } else if (event.target.src.includes('Like.svg')) {
     event.target.src = "./images/LikeActive.svg";
-  }
+  }}
 })
 
+// const likeBtn = photoGrid.querySelectorAll('.card__like-btn');
+// //Like
+// likeBtn.forEach(item => {
+//   item.addEventListener('click', function (event) {
+//     if (event.target.src.includes('LikeActive')) {
+//       event.target.src = "./images/Like.svg";
+//     } else if (event.target.src.includes('Like.svg')) {
+//       event.target.src = "./images/LikeActive.svg";
+//     }
+//   })
+// }); Не работает на добавленных карточках, поэтому слушатель нужно вешать через делегирование
