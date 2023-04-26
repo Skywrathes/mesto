@@ -2,3 +2,7 @@
   overflow: hidden;
   aspect-ratio: 1;
 }
+
+.card__image-container:hover {
+  cursor: pointer;
+}

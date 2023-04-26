@@ -37,6 +37,19 @@ function createCard(item) {
   newCard.querySelector('.card__title').textContent = item.name;
   newCard.querySelector('.card__image').src = item.link;
   newCard.querySelector('.card__image').alt = item.name;
+  const likeBtn = newCard.querySelector('.card__like');
+  likeBtn.addEventListener('click', function(){
+    if (likeBtn.src.includes('LikeActive')) {
+      likeBtn.src = "./images/Like.svg";
+    } else if (likeBtn.src.includes('Like.svg')) {
+      likeBtn.src = "./images/LikeActive.svg";
+    }
+  })
+  const cardDeleteBtn = newCard.querySelector('.card__delete-icon');
+  cardDeleteBtn.addEventListener('click', function(){
+    const closestCard = cardDeleteBtn.closest('.card');
+    closestCard.remove();
+  })
   return newCard;
 }
 
@@ -46,11 +59,12 @@ initialCards.forEach(function (item) {
 });
 
 //Card delete 
-photoGrid.addEventListener('click', function (event) {
-  if (event.target.classList != 'card__delete-icon') return;
-  const closestCard = event.target.closest('.card');
-  closestCard.remove();
-})
+// photoGrid.addEventListener('click', function (event) {
+//   if (event.target.classList == 'card__delete-icon') {
+//     const closestCard = event.target.closest('.card');
+//     closestCard.remove();
+//   }
+// })
 
 //Popups open func
 const openPopup = function (el) {
@@ -125,14 +139,14 @@ addCardForm.addEventListener('submit', addFormSubmit);
 
 
 //Like
-photoGrid.addEventListener('click', function (event) {
-  if (event.target.classList == 'card__like') {
-    if (event.target.src.includes('LikeActive')) {
-    event.target.src = "./images/Like.svg";
-  } else if (event.target.src.includes('Like.svg')) {
-    event.target.src = "./images/LikeActive.svg";
-  }}
-})
+// photoGrid.addEventListener('click', function (event) {
+//   if (event.target.classList == 'card__like') {
+//     if (event.target.src.includes('LikeActive')) {
+//     event.target.src = "./images/Like.svg";
+//   } else if (event.target.src.includes('Like.svg')) {
+//     event.target.src = "./images/LikeActive.svg";
+//   }}
+// })
 
 // const likeBtn = photoGrid.querySelectorAll('.card__like-btn');
 // //Like
