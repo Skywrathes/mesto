@@ -13,28 +13,31 @@ const popupList = document.querySelectorAll('.popup');
 
 // Edit profile popup
 const editProfilePopup = document.querySelector('.popup_type_edit-profile');
-const profileForm = document.querySelector('.edit-form_profile_submit');
-const editProfileNameInput = profileForm.querySelector('.edit-form__input_profile_name');
-const editProfileAboutInput = profileForm.querySelector('.edit-form__input_profile_about');
-const closeEditProfilePopup = editProfilePopup.querySelector('.popup__close_edit_form');
+const profileForm = document.querySelector('.edit-form_profile-submit');
+const editProfileNameInput = profileForm.querySelector('.edit-form__input_profile-name');
+const editProfileAboutInput = profileForm.querySelector('.edit-form__input_profile-about');
+const closeEditProfilePopup = editProfilePopup.querySelector('.popup__close_edit-form');
 
 
 // Add new card popup
 const addCardPopup = document.querySelector('.popup_type_add-card');
-const addCardForm = addCardPopup.querySelector('.edit-form_card_submit');
-const addCardTitleInput = addCardForm.querySelector('.edit-form__input_card_title');
-const addCardLinkInput = addCardForm.querySelector('.edit-form__input_card_link');
-const closeAddCardPopup = addCardPopup.querySelector('.popup__close_card_add');
+const addCardForm = addCardPopup.querySelector('.edit-form_card-submit');
+const addCardTitleInput = addCardForm.querySelector('.edit-form__input_card-title');
+const addCardLinkInput = addCardForm.querySelector('.edit-form__input_card-link');
+const closeAddCardPopup = addCardPopup.querySelector('.popup__close_add-card');
 
 // Fullscreen image show popup
 const showImagePopup = document.querySelector('.popup_type_show-image');
-const closeShowImagePopup = showImagePopup.querySelector('.popup__close_image_fullscreen');
+const closeShowImagePopup = showImagePopup.querySelector('.popup__close_image-fullscreen');
 const fullscreenPopupImage = showImagePopup.querySelector('.popup__image');
 const fullscreenPopupImageTitle = showImagePopup.querySelector('.popup__image-title');
 
 //Template for new card
 const cardTemplate = document.querySelector('#card');
 
+
+
+//FUNCTIONS
 
 //set listener to like card
 function setLikeEventListener(newCard) {
@@ -57,6 +60,7 @@ function setDeleteEventListener(newCard) {
   })
 }
 
+//Create new card using template
 function createCard(item) {
   const newCard = cardTemplate.content.cloneNode(true);
   newCard.querySelector('.card__title').textContent = item.name;
@@ -73,33 +77,21 @@ function createCard(item) {
 }
 
 //Insertion of initial cards
+function insertInitialCards(initialCards) {
 initialCards.forEach(function (item) {
   photoGrid.append(createCard(item));
 });
-
-//Card delete 
-// photoGrid.addEventListener('click', function (event) {
-//   if (event.target.classList == 'card__delete-icon') {
-//     const closestCard = event.target.closest('.card');
-//     closestCard.remove();
-//   }
-// })
+}
 
 //Popups open func
-const openPopup = function (el) {
+function openPopup(el) {
   el.classList.add('popup_opened');
 }
 
 //Popups close func
-const closePopup = function (el) {
+function closePopup(el) {
   el.classList.remove('popup_opened');
 }
-
-// Close popups
-closeEditProfilePopup.addEventListener('click', () => closePopup(editProfilePopup));
-closeAddCardPopup.addEventListener('click', () => closePopup(addCardPopup));
-closeShowImagePopup.addEventListener('click', () => closePopup(showImagePopup));
-
 
 //clear input from errors (put into popupOpen func)
 function clearInputErrors(popupElement){
@@ -108,7 +100,7 @@ function clearInputErrors(popupElement){
 
   //delete underlining of input
   inputList.forEach(function(inputElement){
-    inputElement.classList.remove('edit-form__input_type_error');
+    inputElement.classList.remove('edit-form__input_type-error');
   })
 
   //delete error message
@@ -117,35 +109,12 @@ function clearInputErrors(popupElement){
   });
 }
 
-// Open popup
-editButton.addEventListener('click', () => {
-  openPopup(editProfilePopup);
-  editProfileNameInput.value = nameOnPage.textContent;
-  editProfileAboutInput.value = aboutOnPage.textContent;
-  clearInputErrors(editProfilePopup);
-});
-
-addCardButton.addEventListener('click', () => {
-  openPopup(addCardPopup);
-//possible to use form.reset
-  addCardTitleInput.value = '';
-  addCardLinkInput.value = '';
-  clearInputErrors(addCardPopup);
-});
-
-//Open popup with fullscreen image
-photoGrid.addEventListener('click', function (event) {
-  if (event.target.classList == 'card__image') {
-    fullscreenPopupImage.src = event.target.src;
-    fullscreenPopupImage.alt = event.target.alt;
-    //find nearest card title
-    fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
-    //There is also an option to get event.target.alt
-    openPopup(showImagePopup);
-  }
-});
-
-
+//Disble btn after popup open and before input event
+function disableBtn(popupElement) {
+  const buttonElement = popupElement.querySelector('.edit-form__save');
+  buttonElement.classList.add('edit-form__save_type_inactive');
+  buttonElement.disabled = true;
+}
 
 //Submit profile func
 function handleFormSubmit(evt) {
@@ -172,14 +141,54 @@ function addFormSubmit(evt) {
   closePopup(addCardPopup);
 }
 
+
+
+//HANDLERS
+
+// Open popup
+editButton.addEventListener('click', () => {
+  openPopup(editProfilePopup);
+  editProfileNameInput.value = nameOnPage.textContent;
+  editProfileAboutInput.value = aboutOnPage.textContent;
+  clearInputErrors(editProfilePopup);
+  disableBtn(editProfilePopup);
+});
+
+// Close popups
+closeEditProfilePopup.addEventListener('click', () => closePopup(editProfilePopup));
+closeAddCardPopup.addEventListener('click', () => closePopup(addCardPopup));
+closeShowImagePopup.addEventListener('click', () => closePopup(showImagePopup));
+
+addCardButton.addEventListener('click', () => {
+  openPopup(addCardPopup);
+//possible to use form.reset
+  addCardForm.reset();
+  clearInputErrors(addCardPopup);
+  disableBtn(addCardPopup);
+});
+
+//Open popup with fullscreen image
+//The classList property returns a collection of class names, which is an object data type.
+//That's why the strict equality operator would not work in this case.
+//Possible to use the contains() method of the classList property
+photoGrid.addEventListener('click', function (event) {
+  if (event.target.classList == 'card__image') {
+    fullscreenPopupImage.src = event.target.src;
+    fullscreenPopupImage.alt = event.target.alt;
+    //find nearest card title
+    fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
+    //There is also an option to get event.target.alt
+    openPopup(showImagePopup);
+  }
+});
+
 // Submit listeners
 profileForm.addEventListener('submit', handleFormSubmit);
 addCardForm.addEventListener('submit', addFormSubmit);
 
-
 //close popups with Esc button
 window.addEventListener('keydown', function (evt) {
-  if (evt.key == 'Escape') {
+  if (evt.key === 'Escape') {
     closePopup(showImagePopup);
     closePopup(editProfilePopup);
     closePopup(addCardPopup);
@@ -196,27 +205,7 @@ popupList.forEach(function(popupElement){
 });
 
 
-//Like старая реализация
-// photoGrid.addEventListener('click', function (event) {
-//   if (event.target.classList == 'card__like') {
-//     if (event.target.src.includes('LikeActive')) {
-//     event.target.src = "./images/Like.svg";
-//   } else if (event.target.src.includes('Like.svg')) {
-//     event.target.src = "./images/LikeActive.svg";
-//   }}
-// })
 
-// const likeBtn = photoGrid.querySelectorAll('.card__like-btn');
-// //Like
-// likeBtn.forEach(item => {
-//   item.addEventListener('click', function (event) {
-//     if (event.target.src.includes('LikeActive')) {
-//       event.target.src = "./images/Like.svg";
-//     } else if (event.target.src.includes('Like.svg')) {
-//       event.target.src = "./images/LikeActive.svg";
-//     }
-//   })
-// }); Не работает на добавленных карточках, поэтому слушатель нужно вешать через делегирование
+//FUNCTIONS.exe
 
-
-
+insertInitialCards(initialCards);

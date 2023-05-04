@@ -9,7 +9,6 @@ function showInputError(formElement, inputElement, errorMessage, obj) {
 
 function hideInputError(formElement, inputElement, obj) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  console.log(errorElement);
   inputElement.classList.remove(obj.inputErrorClassActive);
   errorElement.classList.remove(obj.errorMessageClass);
   errorElement.textContent = '';
@@ -58,11 +57,8 @@ function setEventListeners(formElement, obj) {
 
 function enableValidation(obj) {
   const formList = Array.from(document.querySelectorAll(obj.formSelector));
-  console.log(formList);
   formList.forEach(function (formElement) {
-    formList.forEach((formElement) => {
       setEventListeners(formElement, obj);
-    });
   });
 }
 
@@ -72,7 +68,7 @@ enableValidation({
   submitButtonSelector: '.edit-form__save',
   inactiveButtonClass: 'edit-form__save_type_inactive',
   inputErrorClass: '.edit-form__input-error',
-  inputErrorClassActive: 'edit-form__input_type_error',
+  inputErrorClassActive: 'edit-form__input_type-error',
   errorMessageClass: 'edit-form__input-error_active',
 });
 
