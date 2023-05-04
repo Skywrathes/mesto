@@ -8,6 +8,9 @@ const editButton = document.querySelector('.profile__edit-button');
 //Cards
 const photoGrid = document.querySelector('.photo-grid');
 
+//Popups
+const popupList = document.querySelectorAll('.popup');
+
 // Edit profile popup
 const editProfilePopup = document.querySelector('.popup_type_edit-profile');
 const profileForm = document.querySelector('.edit-form_profile_submit');
@@ -32,11 +35,9 @@ const fullscreenPopupImageTitle = showImagePopup.querySelector('.popup__image-ti
 //Template for new card
 const cardTemplate = document.querySelector('#card');
 
-function createCard(item) {
-  const newCard = cardTemplate.content.cloneNode(true);
-  newCard.querySelector('.card__title').textContent = item.name;
-  newCard.querySelector('.card__image').src = item.link;
-  newCard.querySelector('.card__image').alt = item.name;
+
+//set listener to like card
+function setLikeEventListener(newCard) {
   const likeBtn = newCard.querySelector('.card__like');
   likeBtn.addEventListener('click', function(){
     if (likeBtn.src.includes('LikeActive')) {
@@ -45,11 +46,29 @@ function createCard(item) {
       likeBtn.src = "./images/LikeActive.svg";
     }
   })
+}
+
+//set listener to delete card
+function setDeleteEventListener(newCard) {
   const cardDeleteBtn = newCard.querySelector('.card__delete-icon');
   cardDeleteBtn.addEventListener('click', function(){
     const closestCard = cardDeleteBtn.closest('.card');
     closestCard.remove();
   })
+}
+
+function createCard(item) {
+  const newCard = cardTemplate.content.cloneNode(true);
+  newCard.querySelector('.card__title').textContent = item.name;
+  newCard.querySelector('.card__image').src = item.link;
+  newCard.querySelector('.card__image').alt = item.name;
+  
+  //Like listener
+  setLikeEventListener(newCard);
+
+  //Delete listener
+  setDeleteEventListener(newCard);
+
   return newCard;
 }
 
@@ -87,11 +106,14 @@ editButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
   editProfileNameInput.value = nameOnPage.textContent;
   editProfileAboutInput.value = aboutOnPage.textContent;
+  clearInputErrors(editProfilePopup);
 });
 addCardButton.addEventListener('click', () => {
   openPopup(addCardPopup);
+//possible to use form.reset
   addCardTitleInput.value = '';
   addCardLinkInput.value = '';
+  clearInputErrors(addCardPopup);
 });
 
 //Open popup with fullscreen image
@@ -138,7 +160,26 @@ profileForm.addEventListener('submit', handleFormSubmit);
 addCardForm.addEventListener('submit', addFormSubmit);
 
 
-//Like
+//close popups with Esc button
+window.addEventListener('keydown', function (evt) {
+  if (evt.key == 'Escape') {
+    closePopup(showImagePopup);
+    closePopup(editProfilePopup);
+    closePopup(addCardPopup);
+  }
+});
+
+//close popups with background click
+popupList.forEach(function(popupElement){
+  popupElement.addEventListener('mousedown', function (event) {
+    if (event.target.classList.contains('popup')) {
+    closePopup(event.target);
+    }
+});
+});
+
+
+//Like старая реализация
 // photoGrid.addEventListener('click', function (event) {
 //   if (event.target.classList == 'card__like') {
 //     if (event.target.src.includes('LikeActive')) {
@@ -159,3 +200,6 @@ addCardForm.addEventListener('submit', addFormSubmit);
 //     }
 //   })
 // }); Не работает на добавленных карточках, поэтому слушатель нужно вешать через делегирование
+
+
+

@@ -6,4 +6,9 @@
   font-size: 14px;
   line-height: 17px;
   padding-bottom: 10px;
+  width: 100%;
+}
+
+.edit-form__input:focus{
+  outline-color: rgba(26, 88, 255, 0.2);
 }

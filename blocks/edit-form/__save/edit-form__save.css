@@ -10,7 +10,7 @@
   height: 50px;
   transition: opacity .5s ease;
   margin-bottom: 37px;
-  margin-top: 49px;
+  margin-top: 3px;
 }
 
 @media screen and (width < 600px) {
@@ -19,7 +19,6 @@
     line-height: 17px;
     height: 46px;
     margin-bottom: 25px;
-    margin-top: 45px;
   }
 }
 
