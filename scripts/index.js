@@ -101,6 +101,22 @@ closeAddCardPopup.addEventListener('click', () => closePopup(addCardPopup));
 closeShowImagePopup.addEventListener('click', () => closePopup(showImagePopup));
 
 
+//clear input from errors (put into popupOpen func)
+function clearInputErrors(popupElement){
+  const inputErrorList = popupElement.querySelectorAll('.edit-form__input-error');
+  const inputList = Array.from(popupElement.querySelectorAll('.edit-form__input'));
+
+  //delete underlining of input
+  inputList.forEach(function(inputElement){
+    inputElement.classList.remove('edit-form__input_type_error');
+  })
+
+  //delete error message
+  inputErrorList.forEach(error => {
+    error.classList.remove('edit-form__input-error_active');
+  });
+}
+
 // Open popup
 editButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
@@ -108,6 +124,7 @@ editButton.addEventListener('click', () => {
   editProfileAboutInput.value = aboutOnPage.textContent;
   clearInputErrors(editProfilePopup);
 });
+
 addCardButton.addEventListener('click', () => {
   openPopup(addCardPopup);
 //possible to use form.reset
