@@ -1,3 +1,9 @@
+//IMPORTS
+import { initialCards } from './constants.js';
+import { Card } from './card.js';
+import { FormValidator } from './formValidator.js';
+
+
 //find elements in DOM
 //Profile elements
 const nameOnPage = document.querySelector('.profile__name');
@@ -32,56 +38,10 @@ const closeShowImagePopup = showImagePopup.querySelector('.popup__close_image-fu
 const fullscreenPopupImage = showImagePopup.querySelector('.popup__image');
 const fullscreenPopupImageTitle = showImagePopup.querySelector('.popup__image-title');
 
-//Template for new card
-const cardTemplate = document.querySelector('#card');
-
 
 
 //FUNCTIONS
 
-//set listener to like card
-function setLikeEventListener(newCard) {
-  const likeBtn = newCard.querySelector('.card__like');
-  likeBtn.addEventListener('click', function(){
-    if (likeBtn.src.includes('LikeActive')) {
-      likeBtn.src = "./images/Like.svg";
-    } else if (likeBtn.src.includes('Like.svg')) {
-      likeBtn.src = "./images/LikeActive.svg";
-    }
-  })
-}
-
-//set listener to delete card
-function setDeleteEventListener(newCard) {
-  const cardDeleteBtn = newCard.querySelector('.card__delete-icon');
-  cardDeleteBtn.addEventListener('click', function(){
-    const closestCard = cardDeleteBtn.closest('.card');
-    closestCard.remove();
-  })
-}
-
-//Create new card using template
-function createCard(item) {
-  const newCard = cardTemplate.content.cloneNode(true);
-  newCard.querySelector('.card__title').textContent = item.name;
-  newCard.querySelector('.card__image').src = item.link;
-  newCard.querySelector('.card__image').alt = item.name;
-  
-  //Like listener
-  setLikeEventListener(newCard);
-
-  //Delete listener
-  setDeleteEventListener(newCard);
-
-  return newCard;
-}
-
-//Insertion of initial cards
-function insertInitialCards(initialCards) {
-initialCards.forEach(function (item) {
-  photoGrid.append(createCard(item));
-});
-}
 
 //Popups open func
 function openPopup(el) {
@@ -109,7 +69,7 @@ function clearInputErrors(popupElement){
   });
 }
 
-//Disble btn after popup open and before input event
+//Disable btn after popup open and before input event
 function disableBtn(popupElement) {
   const buttonElement = popupElement.querySelector('.edit-form__save');
   buttonElement.classList.add('edit-form__save_type_inactive');
@@ -131,16 +91,52 @@ function handleFormSubmit(evt) {
 //Insertion of new cards func
 function addFormSubmit(evt) {
   evt.preventDefault();
-  // Create obj from inputs to use in createCard func
-  const newCardObj = {
-    name: addCardTitleInput.value,
-    link: addCardLinkInput.value
-  };
+  // Create arr with obj from inputs to use in renderCards func
+  const newCardObj = [{
+    text: addCardTitleInput.value,
+    image: addCardLinkInput.value
+  }];
   //add card to the beginning of photoGrid
-  photoGrid.prepend(createCard(newCardObj));
+  renderCards(newCardObj);
   closePopup(addCardPopup);
 }
 
+//Open fullscreen image func
+//The classList property returns a collection of class names, which is an object data type.
+function openFullscreen(event) {
+  if (event.target.classList == 'card__image') {
+    fullscreenPopupImage.src = event.target.src;
+    fullscreenPopupImage.alt = event.target.alt;
+    //find nearest card title
+    fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
+    //There is also an option to get event.target.alt
+    openPopup(showImagePopup);
+  }
+}
+
+//Render cards func
+function renderCards(dataObject) {
+  dataObject.forEach((item) => {
+    const card = new Card(item.text, item.image, '#card');
+    const cardElement = card.generateCard();
+    photoGrid.prepend(cardElement);
+  })
+}
+
+//Enable validation func
+function renderValidation(formElement) {
+  const newFormValidation = new FormValidator({
+    formSelector: '.edit-form',
+    inputSelector: '.edit-form__input',
+    submitButtonSelector: '.edit-form__save',
+    inactiveButtonClass: 'edit-form__save_type_inactive',
+    inputErrorClass: '.edit-form__input-error',
+    inputErrorClassActive: 'edit-form__input_type-error',
+    errorMessageClass: 'edit-form__input-error_active',
+  }, formElement);
+
+  newFormValidation.enableValidation();
+}
 
 
 //HANDLERS
@@ -161,33 +157,20 @@ closeShowImagePopup.addEventListener('click', () => closePopup(showImagePopup));
 
 addCardButton.addEventListener('click', () => {
   openPopup(addCardPopup);
-//possible to use form.reset
   addCardForm.reset();
   clearInputErrors(addCardPopup);
   disableBtn(addCardPopup);
 });
 
 //Open popup with fullscreen image
-//The classList property returns a collection of class names, which is an object data type.
-//That's why the strict equality operator would not work in this case.
-//Possible to use the contains() method of the classList property
-photoGrid.addEventListener('click', function (event) {
-  if (event.target.classList == 'card__image') {
-    fullscreenPopupImage.src = event.target.src;
-    fullscreenPopupImage.alt = event.target.alt;
-    //find nearest card title
-    fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
-    //There is also an option to get event.target.alt
-    openPopup(showImagePopup);
-  }
-});
+photoGrid.addEventListener('click', openFullscreen);
 
 // Submit listeners
 profileForm.addEventListener('submit', handleFormSubmit);
 addCardForm.addEventListener('submit', addFormSubmit);
 
 //close popups with Esc button
-window.addEventListener('keydown', function (evt) {
+document.addEventListener('keydown', function (evt) {
   if (evt.key === 'Escape') {
     closePopup(showImagePopup);
     closePopup(editProfilePopup);
@@ -208,4 +191,9 @@ popupList.forEach(function(popupElement){
 
 //FUNCTIONS.exe
 
-insertInitialCards(initialCards);
+//Insertion of initial cards
+renderCards(initialCards);
+
+//Enable validation to forms .exe
+renderValidation(profileForm);
+renderValidation(addCardForm);

@@ -9,6 +9,7 @@
   background-color: rgba(0, 0, 0, 0);
   border: 1px solid #FFFFFF;
   transition: opacity .5s ease;
+  transform: translateY(-6px);
 }
 
 .profile__edit-button:hover {
@@ -21,5 +22,6 @@
     width: 18px;
     min-width: 18px;
     height: 18px;
+    transform: translateY(3px);
   }
 }
