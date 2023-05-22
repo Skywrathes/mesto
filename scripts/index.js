@@ -1,7 +1,7 @@
 //IMPORTS
 import { initialCards } from './constants.js';
-import { Card } from './card.js';
-import { FormValidator } from './formValidator.js';
+import { Card } from './Card.js';
+import { FormValidator } from './FormValidator.js';
 
 
 //find elements in DOM
@@ -19,7 +19,7 @@ const popupList = document.querySelectorAll('.popup');
 
 // Edit profile popup
 const editProfilePopup = document.querySelector('.popup_type_edit-profile');
-const profileForm = document.querySelector('.edit-form_profile-submit');
+const profileForm = document.forms['profile-form'];
 const editProfileNameInput = profileForm.querySelector('.edit-form__input_profile-name');
 const editProfileAboutInput = profileForm.querySelector('.edit-form__input_profile-about');
 const closeEditProfilePopup = editProfilePopup.querySelector('.popup__close_edit-form');
@@ -27,7 +27,7 @@ const closeEditProfilePopup = editProfilePopup.querySelector('.popup__close_edit
 
 // Add new card popup
 const addCardPopup = document.querySelector('.popup_type_add-card');
-const addCardForm = addCardPopup.querySelector('.edit-form_card-submit');
+const addCardForm = document.forms['addCard-form'];
 const addCardTitleInput = addCardForm.querySelector('.edit-form__input_card-title');
 const addCardLinkInput = addCardForm.querySelector('.edit-form__input_card-link');
 const closeAddCardPopup = addCardPopup.querySelector('.popup__close_add-card');
@@ -39,42 +39,61 @@ const fullscreenPopupImage = showImagePopup.querySelector('.popup__image');
 const fullscreenPopupImageTitle = showImagePopup.querySelector('.popup__image-title');
 
 
+//Validation variables
+const validationConfig = {
+  formSelector: '.edit-form',
+  inputSelector: '.edit-form__input',
+  submitButtonSelector: '.edit-form__save',
+  inactiveButtonClass: 'edit-form__save_type_inactive',
+  inputErrorClass: '.edit-form__input-error',
+  inputErrorClassActive: 'edit-form__input_type-error',
+  errorMessageClass: 'edit-form__input-error_active',
+};
+const formsToValidate = {profileForm, addCardForm}
+
+//Class instances and validation but not universal
+// const newProfileForm = new FormValidator(validationConfig, profileForm);
+// const newAddCardForm = new FormValidator(validationConfig, addCardForm);
+
+// newProfileForm.enableValidation();
+// newAddCardForm.enableValidation();
+
 
 //FUNCTIONS
 
 
+// Universal validation enabling func
+function enableValidation(validationConfig) {
+  const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
+  formList.forEach((formElement) => {
+    const validatorElement = new FormValidator(validationConfig, formElement);
+    const formName = formElement.getAttribute('name');
+
+    formsToValidate[formName] = validatorElement;
+    validatorElement.enableValidation();
+  });
+}
+
 //Popups open func
 function openPopup(el) {
   el.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupByEscape);
 }
 
 //Popups close func
 function closePopup(el) {
   el.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEscape);
 }
 
-//clear input from errors (put into popupOpen func)
-function clearInputErrors(popupElement){
-  const inputErrorList = popupElement.querySelectorAll('.edit-form__input-error');
-  const inputList = Array.from(popupElement.querySelectorAll('.edit-form__input'));
-
-  //delete underlining of input
-  inputList.forEach(function(inputElement){
-    inputElement.classList.remove('edit-form__input_type-error');
-  })
-
-  //delete error message
-  inputErrorList.forEach(error => {
-    error.classList.remove('edit-form__input-error_active');
-  });
+//Close opened popup by ESCAPE btn
+function closePopupByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
 }
 
-//Disable btn after popup open and before input event
-function disableBtn(popupElement) {
-  const buttonElement = popupElement.querySelector('.edit-form__save');
-  buttonElement.classList.add('edit-form__save_type_inactive');
-  buttonElement.disabled = true;
-}
 
 //Submit profile func
 function handleFormSubmit(evt) {
@@ -88,55 +107,45 @@ function handleFormSubmit(evt) {
   closePopup(editProfilePopup);
 }
 
-//Insertion of new cards func
-function addFormSubmit(evt) {
-  evt.preventDefault();
-  // Create arr with obj from inputs to use in renderCards func
-  const newCardObj = [{
-    text: addCardTitleInput.value,
-    image: addCardLinkInput.value
-  }];
-  //add card to the beginning of photoGrid
-  renderCards(newCardObj);
-  closePopup(addCardPopup);
-}
-
-//Open fullscreen image func
-//The classList property returns a collection of class names, which is an object data type.
-function openFullscreen(event) {
-  if (event.target.classList == 'card__image') {
-    fullscreenPopupImage.src = event.target.src;
-    fullscreenPopupImage.alt = event.target.alt;
-    //find nearest card title
-    fullscreenPopupImageTitle.textContent = event.target.closest('.card').querySelector('.card__title').textContent;
-    //There is also an option to get event.target.alt
-    openPopup(showImagePopup);
-  }
-}
-
-//Render cards func
+//Render initial cards func
 function renderCards(dataObject) {
   dataObject.forEach((item) => {
-    const card = new Card(item.text, item.image, '#card');
-    const cardElement = card.generateCard();
-    photoGrid.prepend(cardElement);
+    photoGrid.append(createCard(item));
   })
 }
 
-//Enable validation func
-function renderValidation(formElement) {
-  const newFormValidation = new FormValidator({
-    formSelector: '.edit-form',
-    inputSelector: '.edit-form__input',
-    submitButtonSelector: '.edit-form__save',
-    inactiveButtonClass: 'edit-form__save_type_inactive',
-    inputErrorClass: '.edit-form__input-error',
-    inputErrorClassActive: 'edit-form__input_type-error',
-    errorMessageClass: 'edit-form__input-error_active',
-  }, formElement);
-
-  newFormValidation.enableValidation();
+//Create new card using template
+function createCard(item) {
+  const card = new Card(item.text, item.image, '#card', openFullscreen);
+  const newCard = card.generateCard();
+  return newCard;
 }
+
+//Open fullscreen image func
+function openFullscreen(text, image) {
+  fullscreenPopupImage.src = image;
+  fullscreenPopupImage.alt = text;
+  fullscreenPopupImageTitle.textContent = text;
+
+  openPopup(showImagePopup);
+  }
+
+
+//Insertion of new cards func
+function handleCardFormSubmit(evt) {
+  evt.preventDefault();
+
+  // Create obj from inputs to use in createCard func
+  const newCardObj = {
+    text: addCardTitleInput.value,
+    image: addCardLinkInput.value
+  };
+
+  //add card to the beginning of photoGrid
+  photoGrid.prepend(createCard(newCardObj));
+  closePopup(addCardPopup);
+}
+
 
 
 //HANDLERS
@@ -146,8 +155,7 @@ editButton.addEventListener('click', () => {
   openPopup(editProfilePopup);
   editProfileNameInput.value = nameOnPage.textContent;
   editProfileAboutInput.value = aboutOnPage.textContent;
-  clearInputErrors(editProfilePopup);
-  disableBtn(editProfilePopup);
+  formsToValidate['profile-form'].resetValidation();
 });
 
 // Close popups
@@ -158,25 +166,14 @@ closeShowImagePopup.addEventListener('click', () => closePopup(showImagePopup));
 addCardButton.addEventListener('click', () => {
   openPopup(addCardPopup);
   addCardForm.reset();
-  clearInputErrors(addCardPopup);
-  disableBtn(addCardPopup);
+  formsToValidate['addCard-form'].resetValidation();
 });
 
-//Open popup with fullscreen image
-photoGrid.addEventListener('click', openFullscreen);
 
 // Submit listeners
 profileForm.addEventListener('submit', handleFormSubmit);
-addCardForm.addEventListener('submit', addFormSubmit);
+addCardForm.addEventListener('submit', handleCardFormSubmit);
 
-//close popups with Esc button
-document.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Escape') {
-    closePopup(showImagePopup);
-    closePopup(editProfilePopup);
-    closePopup(addCardPopup);
-  }
-});
 
 //close popups with background click
 popupList.forEach(function(popupElement){
@@ -194,6 +191,7 @@ popupList.forEach(function(popupElement){
 //Insertion of initial cards
 renderCards(initialCards);
 
-//Enable validation to forms .exe
-renderValidation(profileForm);
-renderValidation(addCardForm);
+//Forms validation
+enableValidation(validationConfig);
+
+
