@@ -1,4 +1,4 @@
-export const initialCards = [
+const initialCards = [
   {
     text: 'Кострома',
     image: 'https://sun9-68.userapi.com/impg/j5T-Vj1EVbMD0ZibDKdDvmswZnPenlCyX7-jrw/3ke7LpeuOmQ.jpg?size=1280x1280&quality=95&sign=cb18327bdd730db3184102ecb891fd84&type=album'
@@ -25,3 +25,42 @@ export const initialCards = [
   }
 ];
 
+const addCardButton = document.querySelector('.profile__add-button');
+const editButton = document.querySelector('.profile__edit-button');
+
+const validationConfig = {
+  formSelector: '.edit-form',
+  inputSelector: '.edit-form__input',
+  submitButtonSelector: '.edit-form__save',
+  inactiveButtonClass: 'edit-form__save_type_inactive',
+  inputErrorClass: '.edit-form__input-error',
+  inputErrorClassActive: 'edit-form__input_type-error',
+  errorMessageClass: 'edit-form__input-error_active',
+};
+const profileForm = document.forms['profile-form'];
+const addCardForm = document.forms['addCard-form'];
+const formsToValidate = {profileForm, addCardForm};
+
+const popupShowImageSelector = '.popup_type_show-image';
+const cardContainerSelector = '.photo-grid';
+const popupAddCardSelector = '.popup_type_add-card';
+const userData = {
+  nameOnPage: '.profile__name',
+  aboutOnPage: '.profile__about',
+}
+const profilePopupSelector = '.popup_type_edit-profile';
+
+export {
+  initialCards,
+  addCardButton,
+  editButton,
+  validationConfig,
+  profileForm,
+  addCardForm,
+  formsToValidate,
+  popupShowImageSelector,
+  cardContainerSelector,
+  popupAddCardSelector,
+  userData,
+  profilePopupSelector
+}

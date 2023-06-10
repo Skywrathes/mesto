@@ -41,7 +41,7 @@ class Card {
 
     //Set data
     this._cardImage.src = this._image;
-    this._cardImage.alt = this._text;
+    this._cardImage.alt = `${this._text} полноэкранное изображение`;
     this._cardText.textContent = this._text;
 
     //set all listeners
