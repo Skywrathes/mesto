@@ -2,7 +2,7 @@
   width: fit-content;
   display: flex;
   gap: 18px;
-  align-items: end;
+  align-items: flex-end;
   max-width: 100%;
 }
 

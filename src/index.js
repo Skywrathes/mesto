@@ -1,4 +1,5 @@
 //IMPORTS
+import './pages/index.css';
 
 import { Card } from './scripts/components/Card.js';
 import { FormValidator } from './scripts/components/FormValidator.js';
@@ -12,8 +13,6 @@ import {
   addCardButton,
   editButton,
   validationConfig,
-  profileForm,
-  addCardForm,
   formsToValidate,
   popupShowImageSelector,
   cardContainerSelector,
@@ -21,41 +20,6 @@ import {
   userData,
   profilePopupSelector
 } from './scripts/utils/constants.js';
-
-// import Popup from './scripts/components/Popup.js';
-
-
-//find elements in DOM
-//Profile elements
-// const nameOnPage = document.querySelector('.profile__name');
-// const aboutOnPage = document.querySelector('.profile__about');
-
-
-//Cards
-// const photoGrid = document.querySelector('.photo-grid');
-
-// //Popups
-// const popupList = document.querySelectorAll('.popup');
-
-// // Edit profile popup
-// const editProfilePopup = document.querySelector('.popup_type_edit-profile');
-// // const profileForm = document.forms['profile-form'];
-// const editProfileNameInput = profileForm.querySelector('.edit-form__input_profile-name');
-// const editProfileAboutInput = profileForm.querySelector('.edit-form__input_profile-about');
-
-
-// // Add new card popup
-// const addCardPopup = document.querySelector('.popup_type_add-card');
-// // const addCardForm = document.forms['addCard-form'];
-// const addCardTitleInput = addCardForm.querySelector('.edit-form__input_card-title');
-// const addCardLinkInput = addCardForm.querySelector('.edit-form__input_card-link');
-
-// Fullscreen image show popup
-// const showImagePopup = document.querySelector('.popup_type_show-image');
-// // const fullscreenPopupImage = showImagePopup.querySelector('.popup__image');
-// const fullscreenPopupImageTitle = showImagePopup.querySelector('.popup__image-title');
-
-// const formsToValidate = {profileForm, addCardForm};
 
 
 //FUNCTIONS
@@ -80,7 +44,6 @@ function enableValidation(validationConfig) {
 
 // newProfileForm.enableValidation();
 // newAddCardForm.enableValidation();
-
 
 
 
@@ -146,5 +109,3 @@ section.addCards();
 
 //Forms validation
 enableValidation(validationConfig);
-
-

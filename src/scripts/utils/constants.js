@@ -55,8 +55,6 @@ export {
   addCardButton,
   editButton,
   validationConfig,
-  profileForm,
-  addCardForm,
   formsToValidate,
   popupShowImageSelector,
   cardContainerSelector,

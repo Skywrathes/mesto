@@ -5,31 +5,30 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 
 <body class="page">
   <div class="page__container">
     <header class="header page__header">
-      <img class="logo" src="./images/LogoMesto.svg" alt="Россия логотип">
+      <img class="logo" src="<%=require('./images/LogoMesto.svg')%>" alt="Россия логотип">
     </header>
     <main class="content">
       <section class="profile page__profile">
         <div class="profile__info-container">
-          <img class="profile__avatar" src="./images/Avatar.svg" alt="Аватар">
+          <img class="profile__avatar" src="<%=require('./images/Avatar.svg')%>" alt="Аватар">
           <div class="profile__info">
             <div class="profile__name-container">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
               <button class="profile__edit-button" type="button">
-                <img class="profile__edit-button-image" src="./images/Pen.svg" alt="Кнопка редактирования профиля">
+                <img class="profile__edit-button-image" src="<%=require('./images/Pen.svg')%>" alt="Кнопка редактирования профиля">
               </button>
             </div>
             <p class="profile__about">Исследователь океана</p>
           </div>
         </div>
         <button class="profile__add-button" type="button">
-          <img class="profile__add-button-cross" src="./images/Cross.svg" alt="Иконка добавления контента">
+          <img class="profile__add-button-cross" src="<%=require('./images/Cross.svg')%>" alt="Иконка добавления контента">
         </button>
       </section>
       <section class="photo-grid page__photo-grid">
@@ -46,7 +45,7 @@
   <section class="popup popup_type_edit-profile">
     <div class="popup__container">
       <button class="popup__close-btn" type="button">
-        <img class="popup__close popup__close_edit-form" src="./images/CloseIcon.svg" alt="Иконка закрытия попапа">
+        <img class="popup__close popup__close_edit-form" src="<%=require('./images/CloseIcon.svg')%>" alt="Иконка закрытия попапа">
       </button>
       <h2 class="popup__title">
         Редактировать профиль
@@ -79,7 +78,7 @@
   <section class="popup popup_type_add-card">
     <div class="popup__container">
       <button class="popup__close-btn" type="button">
-        <img class="popup__close popup__close_add-card" src="./images/CloseIcon.svg" alt="Иконка закрытия попапа">
+        <img class="popup__close popup__close_add-card" src="<%=require('./images/CloseIcon.svg')%>" alt="Иконка закрытия попапа">
       </button>
       <h2 class="popup__title">
         Новое место
@@ -112,7 +111,7 @@
     <div class="popup__container popup__container_type_fullscreen">
       <img class="popup__image" src="#" alt="Изображение на весь экран">
       <button class="popup__close-btn" type="button">
-        <img class="popup__close popup__close_image-fullscreen" src="./images/CloseIcon.svg" alt="Иконка закрытия попапа">
+        <img class="popup__close popup__close_image-fullscreen" src="<%=require('./images/CloseIcon.svg')%>" alt="Иконка закрытия попапа">
       </button>
       <h2 class="popup__image-title">
         Новое место
@@ -123,7 +122,7 @@
   <template id="card">
     <div class="card">
       <button class="card__delete" type="button">
-        <img class='card__delete-icon' src="./images/deleteIcon.svg" alt="Иконка удаления карточки">
+        <img class='card__delete-icon' src="<%=require('./images/deleteIcon.svg')%>" alt="Иконка удаления карточки">
       </button>
       <div class="card__image-container">
         <img class="card__image" src="#" alt="Изображение карточки">
