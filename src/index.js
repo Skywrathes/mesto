@@ -46,6 +46,12 @@ function enableValidation(validationConfig) {
 // newAddCardForm.enableValidation();
 
 
+function createNewCard(item) {
+  const card = new Card(item.text, item.image, '#card', popupImage.open);
+    const newCard = card.generateCard();
+    return newCard
+}
+
 
 //CREATE INSTANCES
 
@@ -64,18 +70,17 @@ const popupAddCard = new PopupWithForm(popupAddCardSelector, (inputsValue) => {
   //this func has already taken inputsValue by getInputsValue method
   //inputsValue is an object 
   //getInputsValue takes values by name attribute!!! must monitore it
-  section.addItem(inputsValue);
+  section.addItem(createNewCard(inputsValue));
   popupAddCard.close();
 });
 
 const popupImage = new PopupWithImage(popupShowImageSelector);
 
+
 const section = new Section({
   items: initialCards,
-  renderer: (item) => {
-    const card = new Card(item.text, item.image, '#card', popupImage.open);
-    const newCard = card.generateCard();
-    return newCard;
+  renderer: (data) => {
+    section.addItem(createNewCard(data));
   }
 }, cardContainerSelector)
 

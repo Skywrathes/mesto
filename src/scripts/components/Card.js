@@ -20,6 +20,7 @@ class Card {
 
   _deleteCard() {
     this._closestCard.remove();
+    this._element = null;
   }
 
 
