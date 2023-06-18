@@ -1,8 +1,0 @@
-.card__delete-icon {
-  transition: opacity .51s ease;
-}
-
-.card__delete-icon:hover {
-  opacity: .6;
-  cursor: pointer;
-}
