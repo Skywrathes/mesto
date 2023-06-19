@@ -7,6 +7,7 @@ import PopupWithImage from './scripts/components/PopupWithImage.js';
 import Section from './scripts/components/Section.js';
 import UserInfo from './scripts/components/UserInfo.js';
 import PopupWithForm from './scripts/components/PopupWithForm.js';
+import Api from './scripts/components/Api';
 
 import {
   initialCards,
@@ -18,8 +19,51 @@ import {
   cardContainerSelector,
   popupAddCardSelector,
   userData,
-  profilePopupSelector
+  profilePopupSelector,
+  popupDeleteCardSelector,
+  popupAddAvatarSelector,
+  editAvatarButton,
+  profileAvatar
 } from './scripts/utils/constants.js';
+
+
+
+
+
+
+
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-69',
+  headers: {
+    authorization: 'f78dfab2-6599-42af-8d1e-761437f71dcf',
+    'Content-Type': 'application/json'
+  }
+});
+
+//User info (me)
+api.getUserInfo()
+.then(res => console.log(res))
+
+//Cards
+api.getInitialCards()
+.then(res => console.log(res))
+
+
+
+
+
+
+
+
+
+
+const section = new Section({
+  items: initialCards,
+  renderer: (data) => {
+    section.addItem(createNewCard(data));
+  }
+}, cardContainerSelector)
 
 
 //FUNCTIONS
@@ -65,6 +109,11 @@ const profilePopupElement = new PopupWithForm(profilePopupSelector, (inputsValue
     profilePopupElement.close();
   });
 
+const popupAddAvatar = new PopupWithForm(popupAddAvatarSelector, (inputsValue) => {
+  profileAvatar.src = inputsValue.avatar;
+  popupAddAvatar.close();
+})
+
 //Add card popup 
 const popupAddCard = new PopupWithForm(popupAddCardSelector, (inputsValue) => {
   //this func has already taken inputsValue by getInputsValue method
@@ -77,12 +126,7 @@ const popupAddCard = new PopupWithForm(popupAddCardSelector, (inputsValue) => {
 const popupImage = new PopupWithImage(popupShowImageSelector);
 
 
-const section = new Section({
-  items: initialCards,
-  renderer: (data) => {
-    section.addItem(createNewCard(data));
-  }
-}, cardContainerSelector)
+
 
 
 
@@ -91,6 +135,7 @@ const section = new Section({
 popupAddCard.setEventListeners();
 popupImage.setEventListeners();
 profilePopupElement.setEventListeners();
+popupAddAvatar.setEventListeners();
 
 // Open popup
 editButton.addEventListener('click', () => {
@@ -104,6 +149,10 @@ addCardButton.addEventListener('click', () => {
   popupAddCard.open();
   formsToValidate['addCard-form'].resetValidation();
 });
+
+editAvatarButton.addEventListener('click', () => {
+  popupAddAvatar.open();
+})
 
 
 

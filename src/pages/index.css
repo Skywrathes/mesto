@@ -57,3 +57,5 @@
 @import url(../blocks/edit-form/__input-error/edit-form__input-error.css);
 @import url(../blocks/edit-form/__input-error/_active/edit-form__input-error_active.css);
 @import url(../blocks/edit-form/__input-container/edit-form__input-container.css);
+@import url(../blocks/profile/__avatar-cover/profile__avatar-cover.css);
+@import url(../blocks/profile/__avatar-edit/profile__avatar-edit.css);

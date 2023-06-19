@@ -27,6 +27,8 @@ const initialCards = [
 
 const addCardButton = document.querySelector('.profile__add-button');
 const editButton = document.querySelector('.profile__edit-button');
+const editAvatarButton = document.querySelector('.profile__avatar-edit');
+const profileAvatar = document.querySelector('.profile__avatar');
 
 const validationConfig = {
   formSelector: '.edit-form',
@@ -44,6 +46,8 @@ const formsToValidate = {profileForm, addCardForm};
 const popupShowImageSelector = '.popup_type_show-image';
 const cardContainerSelector = '.photo-grid';
 const popupAddCardSelector = '.popup_type_add-card';
+const popupDeleteCardSelector = '.popup_type_delete-card';
+const popupAddAvatarSelector = '.popup_type_add-avatar';
 const userData = {
   nameOnPage: '.profile__name',
   aboutOnPage: '.profile__about',
@@ -60,5 +64,9 @@ export {
   cardContainerSelector,
   popupAddCardSelector,
   userData,
-  profilePopupSelector
+  profilePopupSelector,
+  popupDeleteCardSelector,
+  popupAddAvatarSelector,
+  editAvatarButton,
+  profileAvatar
 }

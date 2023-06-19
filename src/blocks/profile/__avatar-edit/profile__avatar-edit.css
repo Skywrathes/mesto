@@ -1,0 +1,19 @@
+.profile__avatar-edit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  background-image: url("../../../images/Pen.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.profile__avatar-edit:hover {
+  opacity: 1;
+  cursor: pointer;
+}
