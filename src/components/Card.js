@@ -45,7 +45,6 @@ class Card {
   _getLikes() {
     this._likes.forEach((user) => {
       if (user._id === this._myId) {
-        console.log(this._myId);
         this._likeBtn.classList.add("card__like_active");
       }
     })

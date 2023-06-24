@@ -9,15 +9,20 @@ export default class UserInfo {
     return {
       //name and about as in html input name
       name: this._name.textContent,
-      about: this._about.textContent
+      about: this._about.textContent,
     }
   }
 
+  getUserId() {
+    return this._id
+  }
+
   //return data
-  setUserInfo ({name, about, avatar}) {
+  setUserInfo ({name, about, avatar, id}) {
     //name, avatar and about as in html input name
     this._avatar.src = avatar;
     this._name.textContent = name;
     this._about.textContent = about;
+    this._id = id;
   }
 }

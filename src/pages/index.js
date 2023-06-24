@@ -1,14 +1,14 @@
 //IMPORTS
-import './pages/index.css';
+import './index.css';
 
-import { Card } from './scripts/components/Card.js';
-import { FormValidator } from './scripts/components/FormValidator.js';
-import PopupWithImage from './scripts/components/PopupWithImage.js';
-import Section from './scripts/components/Section.js';
-import UserInfo from './scripts/components/UserInfo.js';
-import PopupWithForm from './scripts/components/PopupWithForm.js';
-import Api from './scripts/components/Api';
-import PopupWithDelete from './scripts/components/PopupWithDelete';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import Section from '../components/Section.js';
+import UserInfo from '../components/UserInfo.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import Api from '../components/Api';
+import PopupWithDelete from '../components/PopupWithDelete';
 
 import {
   addCardButton,
@@ -23,7 +23,7 @@ import {
   popupDeleteCardSelector,
   popupAddAvatarSelector,
   editAvatarButton
-} from './scripts/utils/constants.js';
+} from '../utils/constants.js';
 
 
 
@@ -77,7 +77,6 @@ function createNewCard(item) {
     if (likeIcon.classList.contains("card__like_active")) {
       api.deleteLike(cardId)
       .then((res) => {
-        //
         card.likeCard(res.likes)
       })
       .catch((err) => console.error(`Ошибка удаления лайка: ${err}`));
@@ -119,38 +118,40 @@ const popupWithDelete = new PopupWithDelete(popupDeleteCardSelector, (cardElemen
 const profilePopupElement = new PopupWithForm(profilePopupSelector, (inputsValue) => {
     api.editUserInfo(inputsValue)
     .then((res) => {
-      userInfo.setUserInfo(res)
+      userInfo.setUserInfo(res);
+      profilePopupElement.close();
     })
     .catch((err) => console.error(`Ошибка обновления данных пользователя: ${err}`))
     .finally(() => profilePopupElement.setInitialText())
-    profilePopupElement.close();
   });
 
 //add Avatar popup
 const popupAddAvatar = new PopupWithForm(popupAddAvatarSelector, (inputsValue) => {
   api.editAvatar(inputsValue).then((res) => {
-      userInfo.setUserInfo(res)
+      userInfo.setUserInfo(res);
+      popupAddAvatar.close();
     })
     .catch((err) => console.error(`Ошибка изменения аватара: ${err}`))
     .finally(() => popupAddAvatar.setInitialText())
-  popupAddAvatar.close();
 })
+
+
 
 //Add card popup 
 const popupAddCard = new PopupWithForm(popupAddCardSelector, (inputsValue) => {
   //this func has already taken inputsValue by getInputsValue method
   //inputsValue is an object 
   //getInputsValue takes values by name attribute!!! must monitore it
-  Promise.all([api.getUserInfo(), api.addNewCard(inputsValue)])
-  .then(([user, card]) => {
-    card.id = user._id;
-    section.addItem(createNewCard(card))
+  api.addNewCard(inputsValue)
+  .then((card) => {
+    card.id = userInfo.getUserId();
+    section.addItem(createNewCard(card));
+    popupAddCard.close();
   })
   .catch((err) => {
     console.error(`Ошибка добавления карточки: ${err}`);
   })
-  .finally(() => popupAddCard.setInitialText())
-  popupAddCard.close();
+  .finally(() => popupAddCard.setInitialText());
 });
 
 
@@ -199,8 +200,9 @@ Promise.all([
   .then(([user, cards]) => {
     
     //change userInfo, use destructing
-    userInfo.setUserInfo({ name: user.name, about: user.about, avatar: user.avatar });
+    userInfo.setUserInfo({ name: user.name, about: user.about, avatar: user.avatar, id: user._id});
     cards.forEach((cardElement) => {cardElement.id = user._id});
     section.addCards(cards);
+    console.log(cards);
   })
   .catch((err) => console.error(`Ошибка загрузки карточек: ${err}`));
