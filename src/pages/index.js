@@ -203,6 +203,5 @@ Promise.all([
     userInfo.setUserInfo({ name: user.name, about: user.about, avatar: user.avatar, id: user._id});
     cards.forEach((cardElement) => {cardElement.id = user._id});
     section.addCards(cards);
-    console.log(cards);
   })
   .catch((err) => console.error(`Ошибка загрузки карточек: ${err}`));
