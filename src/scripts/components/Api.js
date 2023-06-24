@@ -32,6 +32,90 @@ export default class Api {
     .then(this._checkRes)
   }
 
-  // другие методы работы с API
+  editUserInfo(userData) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+
+      headers: this._headers,
+
+      body: JSON.stringify({
+        name: userData.name,
+        about: userData.about
+      })
+    
+    })
+    .then(this._checkRes)
+  }
+
+  editAvatar(userData) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+
+      headers: this._headers,
+
+      body: JSON.stringify({
+        avatar: userData.avatar,
+      })
+    
+    })
+    .then(this._checkRes)
+  }
+
+  
+  addNewCard(cardData) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify({
+        name: cardData.name,
+        link: cardData.link
+      })
+    
+    })
+    .then(this._checkRes)
+  }
+  // Если запрос прошёл успешно, сервер вернёт ответ с объектом новой карточки
+
+  deleteCard(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+
+      headers: {
+        authorization: this._authorization,
+      },
+    
+    })
+    .then(this._checkRes)
+  }
+
+  addLike (cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+
+      headers: {
+        authorization: this._authorization,
+      },
+    
+    })
+    .then(this._checkRes)
+  }
+
+  deleteLike (cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+
+      headers: {
+        authorization: this._authorization,
+      },
+    
+    })
+    .then(this._checkRes)
+  }
+
 }
 

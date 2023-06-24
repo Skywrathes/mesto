@@ -17,17 +17,17 @@
       <section class="profile page__profile">
         <div class="profile__info-container">
           <div class="profile__avatar-cover">
-            <img class="profile__avatar" src="<%=require('./images/cQf3846D5h8.jpg')%>" alt="Аватар">
+            <img class="profile__avatar" src="#" alt="Аватар">
             <div class="profile__avatar-edit"></div>
           </div>
           <div class="profile__info">
             <div class="profile__name-container">
-              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <h1 class="profile__name"></h1>
               <button class="profile__edit-button" type="button">
                 <img class="profile__edit-button-image" src="<%=require('./images/Pen.svg')%>" alt="Кнопка редактирования профиля">
               </button>
             </div>
-            <p class="profile__about">Исследователь океана</p>
+            <p class="profile__about"></p>
           </div>
         </div>
         <button class="profile__add-button" type="button">
@@ -89,15 +89,15 @@
       <form class="edit-form edit-form_card-submit" name="addCard-form" novalidate>
         <fieldset class="edit-form__container">
           <div class="edit-form__input-container">
-            <input class="edit-form__input edit-form__input_card-text" type="text" id="text-input" 
-            name="text" placeholder="Название" minlength="2" maxlength="30" required>
-            <span class="edit-form__input-error text-input-error" ></span>
+            <input class="edit-form__input edit-form__input_card-name" type="text" id="name-input" 
+            name="name" placeholder="Название" minlength="2" maxlength="30" required>
+            <span class="edit-form__input-error name-input-error" ></span>
           </div>
           
           <div class="edit-form__input-container">
-            <input class="edit-form__input edit-form__input_card-image" type="url" id="image-input" 
-            name="image" placeholder="Ссылка на картинку" required>
-            <span class="edit-form__input-error image-input-error" ></span>
+            <input class="edit-form__input edit-form__input_card-link" type="url" id="link-input" 
+            name="link" placeholder="Ссылка на картинку" required>
+            <span class="edit-form__input-error link-input-error" ></span>
           </div>
           
         </fieldset>
@@ -177,7 +177,7 @@
         </h2>
         <button class="card__like-btn" type="button">
           <div class="card__like"></div>
-          <div class="card__like-number">0</div>
+          <div class="card__like-number"></div>
         </button>
       </div>
     </div>
