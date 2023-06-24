@@ -21,7 +21,7 @@
 .photo-grid{display:grid;gap:20px 17px;grid-template-columns:repeat(3,1fr);padding-top:51px}@media screen and (width < 1280px){.photo-grid{grid-template-columns:repeat(2,1fr);padding-top:calc(30.99479px + 1.56413vw)}}@media screen and (width < 1024px){.photo-grid{grid-template-columns:repeat(1,1fr)}}
 .page__photo-grid{margin-left:200px;margin-right:200px}@media screen and (width < 1280px){.page__photo-grid{margin-left:calc(-41.39625px + 18.87383vw);margin-right:calc(-41.39625px + 18.87383vw)}}
 .card{border-radius:10px;overflow:hidden;position:relative;width:100%}
-.card__delete{background-color:transparent;border:0;height:19px;padding:0;position:absolute;right:20px;top:20px;width:18px}.card__delete:hover{background:hsla(0,0%,100%,0);cursor:pointer}
+.card__delete{background-color:transparent;border:0;padding:0;position:absolute;right:20px;top:20px}.card__delete:hover{background:hsla(0,0%,100%,0);cursor:pointer}
 .card__delete-icon{transition:opacity .51s ease}.card__delete-icon:hover{cursor:pointer;opacity:.6}
 .card__image-container{aspect-ratio:1;overflow:hidden}.card__image-container:hover{cursor:pointer}
 .card__image{height:100%;-o-object-fit:cover;object-fit:cover;width:100%}
